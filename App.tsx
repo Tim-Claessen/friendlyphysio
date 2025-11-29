@@ -1,19 +1,46 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PaperProvider } from "react-native-paper";
 import { FriendlyPhysioTheme } from "./src/theme/FriendlyPhysioTheme";
-import { PaperProvider, Text } from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Colors } from "./src/theme/DesignSystem";
+import HomeScreen from "./src/screens/HomeScreen";
+import DailyActivityScreen from "./src/screens/DailyActivityScreen";
+import DifficultyScreen from "./src/screens/DifficultyScreen";
+import ActivityScreen from "./src/screens/ActivityScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <PaperProvider theme={FriendlyPhysioTheme}>
       <View style={styles.container}>
-        <Text>Can you see the logo?</Text>
-        <Image
-          source={require("./assets/FF_logo_PurpleOrange.png")}
-          style={styles.logo}
-        />
-        <StatusBar style="light" />
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+              animation: 'default',
+              //animationDuration: 4000,
+            }}
+          >
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen}
+          />
+          <Stack.Screen 
+            name="DailyActivity" 
+            component={DailyActivityScreen}
+          />
+          <Stack.Screen 
+            name="Difficulty" 
+            component={DifficultyScreen}
+          />
+          <Stack.Screen 
+            name="Activity" 
+            component={ActivityScreen}
+          />
+          </Stack.Navigator>
+        </NavigationContainer>
       </View>
     </PaperProvider>
   );
@@ -22,13 +49,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    marginTop: 20,
-    resizeMode: "contain",
+    backgroundColor: Colors.surface,
   },
 });
